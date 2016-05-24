@@ -7,7 +7,7 @@
 설치방법은 치비툴 [1.10.8.4 버전](http://canto.btool.kr/index.php?mid=chibi&category=131&document_srl=41364) 을 기준으로 설명합니다.
 
 ### 파일 업로드
-`[gacha.lib.php](./blob/master/gacha.lib.php)` 파일을 치비툴 루트 디렉토리로 복사합니다.
+[gacha.lib.php](./gacha.lib.php) 파일을 치비툴 루트 디렉토리로 복사합니다.
 
 ### comment.submit.php 수정
 가챠굴림 결과가 댓글로 저장되도록 코드를 추가합니다.
@@ -73,3 +73,6 @@ echo "<br/>".$children;
   <b><?=$comment->name?></b>
 
 ```
+
+## 설정 방법
+[gacha.lib.php](./gacha.lib.php) 파일 상단의 주석을 참고해주세요.
