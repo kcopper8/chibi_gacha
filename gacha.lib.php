@@ -46,7 +46,7 @@ $gacha_chibi_comment_message = '"[name]" 님의 가챠 결과: [[item_name]] 이
  *
  * 각각의 상품 상세 정보 배열은 다음과 같이 구성되어 있습니다.
  *
- * [상품아이디, 상품이름, 상품확률수]
+ * array(상품아이디, 상품이름, 상품확률수)
  *
  * 상품아이디는 각 상품을 구분하기 위한 값입니다. 영문과 숫자로 이루어진 값을
  * 다른 상품과 겹치지 않도록 지정해주세요. 추후에 각 아이템의 이미지를 만들 계획이
@@ -65,15 +65,15 @@ $gacha_chibi_comment_message = '"[name]" 님의 가챠 결과: [[item_name]] 이
  * 설정하고 싶다면, 상품확률수를 각각 1, 2, 7 로 설정하시면 됩니다.
  * 10, 20, 70으로 설정해도 무방합니다.
  */
-$gacha_items = [
-  ['dw', '던전 월드', 1],
-  ['aw', '아포칼립스 월드', 2],
-  ['fc', '페이트 코어', 1],
-  ['tb', '고마워요! 대소동 해결단!', 1],
-  ['po', '폴라리스', 1],
-  ['wm', '고민해결! 마법서점', 3],
-  ['fi', '피아스코', 1]
-];
+$gacha_items = array(
+  array('dw', '던전 월드', 1),
+  array('aw', '아포칼립스 월드', 2),
+  array('fc', '페이트 코어', 1),
+  array('tb', '고마워요! 대소동 해결단!', 1),
+  array('po', '폴라리스', 1),
+  array('wm', '고민해결! 마법서점', 3),
+  array('fi', '피아스코', 1)
+);
 
 /* **********************************************************************
  * 여기까지 설정값들이 기록되는 영역입니다.
@@ -84,7 +84,7 @@ $gacha_items = [
  define('GACHA_ITEM_KEY_RATE', 2);
 
  function gacha_validate_items($gacha_items) {
-   $item_keys = [];
+   $item_keys = array();
    $rate_sum = 0;
 
    foreach($gacha_items as $item) {
@@ -155,7 +155,7 @@ $gacha_items = [
  function gacha_chibi_comment_insert($chibi_conn, $cid, $pic_no, $no, $name) {
   $item = gacha_draw();
 
- 	$gacha_op = [];
+ 	$gacha_op = array();
  	$gacha_op['gacha'] = $item[GACHA_ITEM_KEY_ID];
  	$gacha_op['position'] = $GLOBALS['gacha_chibi_comment_position'];
  	$gacha_op = serialize($gacha_op);
@@ -163,7 +163,7 @@ $gacha_items = [
   $gacha_name = $GLOBALS['gacha_chibi_comment_name'];
  	$gacha_passwd = $GLOBALS['gacha_chibi_comment_passwd'];
  	$gacha_memo = $GLOBALS['gacha_chibi_comment_memo'];
- 	$gacha_comment = str_replace(['[name]', '[item_name]'], [$name, $item[GACHA_ITEM_KEY_NAME]], $GLOBALS['gacha_chibi_comment_message']);
+ 	$gacha_comment = str_replace(array('[name]', '[item_name]'), array($name, $item[GACHA_ITEM_KEY_NAME]), $GLOBALS['gacha_chibi_comment_message']);
 
   $query = "INSERT INTO `chibi_comment` (`cid`,`pic_no`,`no`,`children`,`depth`, `name`, `passwd`, `rtime`, `comment`, `memo`, `hpurl`, `ip`, `op`)VALUES('".mysql_real_escape_string($cid)."','".mysql_real_escape_string($pic_no)."','".mysql_real_escape_string($no+1)."','1','1','".mysql_real_escape_string($gacha_name)."','".mysql_real_escape_string(md5($gacha_passwd))."','".time()."','".mysql_real_escape_string($gacha_comment)."','".mysql_real_escape_string($gacha_memo)."','','127.0.0.1','".mysql_real_escape_string($gacha_op)."')";
   return mysql_query($query,$chibi_conn);
